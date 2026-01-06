@@ -1,0 +1,41 @@
+{
+  "name": "browser-automation-benchmark",
+  "version": "1.0.0",
+  "description": "Comprehensive benchmark suite for browser automation tools: browser-use, dev3000, firecrawl, playwriter, playwright-mcp",
+  "type": "module",
+  "scripts": {
+    "benchmark": "bun run benchmarks/runner.ts",
+    "benchmark:scraping": "bun run benchmarks/runner.ts --scenario=scraping",
+    "benchmark:navigation": "bun run benchmarks/runner.ts --scenario=navigation",
+    "benchmark:debugging": "bun run benchmarks/runner.ts --scenario=debugging",
+    "benchmark:forms": "bun run benchmarks/runner.ts --scenario=form-filling",
+    "benchmark:search": "bun run benchmarks/runner.ts --scenario=search",
+    "benchmark:structured": "bun run benchmarks/runner.ts --scenario=structured-data",
+    "results": "bun run benchmarks/utils/show-results.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint benchmarks/"
+  },
+  "dependencies": {
+    "@mendable/firecrawl-js": "^1.15.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "playwright": "^1.48.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [
+    "browser-automation",
+    "benchmark",
+    "playwright",
+    "mcp",
+    "web-scraping",
+    "ai-agents"
+  ],
+  "license": "MIT"
+}
