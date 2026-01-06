@@ -1,0 +1,13 @@
+[submodule "dev3000"]
+	path = context/dev3000
+	url = https://github.com/vercel-labs/dev3000
+
+[submodule "playwriter"]
+	path = context/playwriter
+	url = https://github.com/remorses/playwriter
+[submodule "context/dev3000"]
+	path = context/dev3000
+	url = https://github.com/vercel-labs/dev3000
+[submodule "context/playwriter"]
+	path = context/playwriter
+	url = https://github.com/remorses/playwriter
