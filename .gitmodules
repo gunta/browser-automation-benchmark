@@ -1,13 +1,15 @@
-[submodule "dev3000"]
-	path = context/dev3000
-	url = https://github.com/vercel-labs/dev3000
-
-[submodule "playwriter"]
-	path = context/playwriter
-	url = https://github.com/remorses/playwriter
 [submodule "context/dev3000"]
 	path = context/dev3000
 	url = https://github.com/vercel-labs/dev3000
 [submodule "context/playwriter"]
 	path = context/playwriter
 	url = https://github.com/remorses/playwriter
+[submodule "context/browser-use"]
+	path = context/browser-use
+	url = https://github.com/browser-use/browser-use
+[submodule "context/firecrawl"]
+	path = context/firecrawl
+	url = https://github.com/firecrawl/firecrawl
+[submodule "context/playwright-mcp"]
+	path = context/playwright-mcp
+	url = https://github.com/microsoft/playwright-mcp
