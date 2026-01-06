@@ -216,7 +216,7 @@ export class StagehandAdapter extends BaseAdapter {
     // return result;
 
     throw new Error(
-      "Structured extraction requires the Stagehand SDK. Install with: npm install @browserbase/stagehand"
+      "Structured extraction requires the Stagehand SDK. Install with: bun add @browserbasehq/stagehand"
     );
   }
 

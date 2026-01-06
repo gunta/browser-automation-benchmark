@@ -46,11 +46,11 @@ Not all tools require API keys! Here's what you need for each:
 | **playwright-mcp** | _None_ | Just works via npx |
 | **playwriter** | _None_ | Chrome extension only |
 | **firecrawl** | `FIRECRAWL_API_KEY` | [firecrawl.dev](https://firecrawl.dev/) |
-| **browser-use** | `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` | [console.anthropic.com](https://console.anthropic.com/) |
+| **browser-use** | `BROWSER_USE_API_KEY` (recommended) or `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` | [cloud.browser-use.com](https://cloud.browser-use.com/new-api-key) |
 | **dev3000** | _None_ | Just works |
 | **claude-code-chrome** | _None (requires Claude Pro subscription)_ | [claude.ai](https://claude.ai/) |
 | **stagehand** | `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` | [platform.openai.com](https://platform.openai.com/) |
-| **browserbase-mcp** | `BROWSERBASE_API_KEY` + `BROWSERBASE_PROJECT_ID` | [browserbase.com](https://www.browserbase.com/) |
+| **browserbase-mcp** | `BROWSERBASE_API_KEY` + `BROWSERBASE_PROJECT_ID` (+ `GEMINI_API_KEY` for local default model) | [browserbase.com](https://www.browserbase.com/) |
 
 > 💡 **Tip**: You only need API keys for the tools you plan to benchmark. Start with `playwright-mcp` or `playwriter` - they require no API keys!
 
@@ -73,8 +73,8 @@ bun install
 bunx playwright install chromium
 
 # 5. Set up environment variables
-cp .env.example .env
-# Edit .env with your API keys
+touch .env
+# Paste the template from "Environment Variables Reference" below and fill in your API keys
 
 # 6. Run a quick test
 bun run benchmark:scraping --adapter=playwright-mcp
@@ -136,10 +136,10 @@ bunx playwright install-deps chromium
 ### 4. Configure Environment Variables
 
 ```bash
-# Create .env file from template
-cp .env.example .env
+# Create a .env file
+touch .env
 
-# Edit with your preferred editor
+# Edit with your preferred editor (then paste the template from below)
 nano .env
 # or
 code .env
@@ -198,12 +198,12 @@ npx @playwright/mcp@latest --help
 | **Setup Time** | ~2 minutes |
 
 1. **Install the Chrome Extension:**
-   - Visit [Chrome Web Store - Playwriter](https://chromewebstore.google.com/detail/playwriter)
+   - Visit [Chrome Web Store - Playwriter MCP](https://chromewebstore.google.com/detail/playwriter-mcp/jfeammnjpkecdekppnclgkkffahnhfhe)
    - Click "Add to Chrome"
 
 2. **Start the MCP Server:**
    ```bash
-   npx playwriter
+   npx playwriter@latest
    ```
 
 3. **MCP Configuration:**
@@ -212,7 +212,7 @@ npx @playwright/mcp@latest --help
      "mcpServers": {
        "playwriter": {
          "command": "npx",
-         "args": ["playwriter"]
+         "args": ["playwriter@latest"]
        }
      }
    }
@@ -279,7 +279,7 @@ FIRECRAWL_API_URL=http://localhost:3002
 
 | Requirement | Value |
 |-------------|-------|
-| **Env Vars** | `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` ✅ Required (one of) |
+| **Env Vars** | `BROWSER_USE_API_KEY` ✅ Recommended (or `OPENAI_API_KEY` / `ANTHROPIC_API_KEY`) |
 | **Browser** | Chromium (via Playwright) |
 | **Setup Time** | ~5 minutes |
 
@@ -308,20 +308,22 @@ FIRECRAWL_API_URL=http://localhost:3002
    playwright install chromium
    ```
 
-5. **Add to `.env` file (choose one LLM provider):**
+5. **Add to `.env` file:**
    ```bash
    # ┌────────────────────────────────────────────────────────────────────────┐
    # │ TOOL: browser-use                                                      │
-   # │ Required: ANTHROPIC_API_KEY or OPENAI_API_KEY (at least one)           │
+   # │ Recommended: BROWSER_USE_API_KEY (Browser Use Cloud / ChatBrowserUse)  │
    # └────────────────────────────────────────────────────────────────────────┘
    
-   # Option A: Anthropic (recommended)
-   # Get from: https://console.anthropic.com/
-   ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
+   # Option A: Browser Use Cloud (recommended)
+   # Get from: https://cloud.browser-use.com/new-api-key
+   BROWSER_USE_API_KEY=bu_your-key-here
    
-   # Option B: OpenAI
-   # Get from: https://platform.openai.com/api-keys
+   # Option B: OpenAI (alternative)
    # OPENAI_API_KEY=sk-proj-your-key-here
+   
+   # Option C: Anthropic (alternative)
+   # ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
    ```
 
 6. **Test the installation:**
@@ -430,7 +432,7 @@ FIRECRAWL_API_URL=http://localhost:3002
 
 1. **Install Stagehand:**
    ```bash
-   bun add @browserbase/stagehand
+   bun add @browserbasehq/stagehand
    ```
 
 2. **Add to `.env` file (choose one LLM provider):**
@@ -451,7 +453,7 @@ FIRECRAWL_API_URL=http://localhost:3002
 
 3. **Test the installation:**
    ```typescript
-   import { Stagehand } from "@browserbase/stagehand";
+   import { Stagehand } from "@browserbasehq/stagehand";
    
    const stagehand = new Stagehand({ env: "LOCAL" });
    await stagehand.init();
@@ -482,7 +484,7 @@ const stagehand = new Stagehand({
 
 | Requirement | Value |
 |-------------|-------|
-| **Env Vars** | `BROWSERBASE_API_KEY` + `BROWSERBASE_PROJECT_ID` ✅ Both Required |
+| **Env Vars** | `BROWSERBASE_API_KEY` + `BROWSERBASE_PROJECT_ID` ✅ Required (and `GEMINI_API_KEY` if running locally) |
 | **Browser** | Cloud (no local browser needed) |
 | **Setup Time** | ~5 minutes |
 
@@ -502,6 +504,9 @@ const stagehand = new Stagehand({
    # Get from: https://www.browserbase.com/
    BROWSERBASE_API_KEY=bb_live_your-api-key-here
    BROWSERBASE_PROJECT_ID=your-project-id-here
+   
+   # If running the MCP server locally with the default Stagehand model:
+   # GEMINI_API_KEY=your-gemini-key-here
    ```
 
 3. **MCP Configuration (for Claude Desktop):**
@@ -510,10 +515,11 @@ const stagehand = new Stagehand({
      "mcpServers": {
        "browserbase": {
          "command": "npx",
-         "args": ["@anthropic-ai/mcp-server-browserbase"],
+         "args": ["@browserbasehq/mcp-server-browserbase"],
          "env": {
            "BROWSERBASE_API_KEY": "${BROWSERBASE_API_KEY}",
-           "BROWSERBASE_PROJECT_ID": "${BROWSERBASE_PROJECT_ID}"
+           "BROWSERBASE_PROJECT_ID": "${BROWSERBASE_PROJECT_ID}",
+           "GEMINI_API_KEY": "${GEMINI_API_KEY}"
          }
        }
      }
@@ -525,7 +531,7 @@ const stagehand = new Stagehand({
    # Load .env first
    source .env
    
-   npx @anthropic-ai/mcp-server-browserbase
+   npx @browserbasehq/mcp-server-browserbase
    ```
 
 ---
@@ -643,11 +649,13 @@ The benchmark uses Claude Opus 4.5 pricing by default:
 
 | Variable | Required For | Example Value |
 |----------|--------------|---------------|
-| `ANTHROPIC_API_KEY` | browser-use, stagehand | `sk-ant-api03-xxxxx` |
-| `OPENAI_API_KEY` | stagehand (alternative) | `sk-proj-xxxxx` |
+| `BROWSER_USE_API_KEY` | browser-use (recommended) | `bu-xxxxx` |
+| `OPENAI_API_KEY` | stagehand (recommended) / browser-use (alternative) | `sk-proj-xxxxx` |
+| `ANTHROPIC_API_KEY` | stagehand (alternative) / browser-use (alternative) | `sk-ant-api03-xxxxx` |
 | `FIRECRAWL_API_KEY` | firecrawl | `fc-xxxxx` |
 | `BROWSERBASE_API_KEY` | browserbase-mcp | `bb_live_xxxxx` |
 | `BROWSERBASE_PROJECT_ID` | browserbase-mcp | `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` |
+| `GEMINI_API_KEY` | browserbase-mcp (local default model) | `AIza...` |
 
 ### Minimal Setup (No API Keys)
 
@@ -664,9 +672,10 @@ These tools work without any API keys:
 # ║     Copy this to .env and fill in ONLY the keys for tools you need          ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
-# ┌─ LLM PROVIDERS (for browser-use, stagehand) ─────────────────────────────────┐
-# │ You need at least ONE of these for AI-powered tools                          │
-# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌─ BROWSER-USE (recommended) ──────────────────────────────────────────────────┐
+BROWSER_USE_API_KEY=
+
+# ┌─ LLM PROVIDERS (for stagehand, and browser-use alternatives) ────────────────┐
 ANTHROPIC_API_KEY=
 OPENAI_API_KEY=
 
@@ -676,6 +685,7 @@ FIRECRAWL_API_KEY=
 # ┌─ BROWSERBASE ────────────────────────────────────────────────────────────────┐
 BROWSERBASE_API_KEY=
 BROWSERBASE_PROJECT_ID=
+GEMINI_API_KEY=
 
 # ┌─ BENCHMARK CONFIG ───────────────────────────────────────────────────────────┐
 BENCHMARK_MODEL=claude-opus-4-5
@@ -701,14 +711,17 @@ bunx playwright install chromium
 bunx playwright install-deps chromium
 ```
 
-#### "ANTHROPIC_API_KEY not set"
+#### "Missing API key" (browser-use / stagehand)
 
 ```bash
-# Check if .env file exists
-cat .env | grep ANTHROPIC
+# Check if .env file exists and contains a key
+cat .env | egrep 'BROWSER_USE_API_KEY|OPENAI_API_KEY|ANTHROPIC_API_KEY'
 
 # Or export directly
-export ANTHROPIC_API_KEY=sk-ant-your-key-here
+export BROWSER_USE_API_KEY=bu-your-key-here
+# or
+# export OPENAI_API_KEY=sk-proj-your-key-here
+# export ANTHROPIC_API_KEY=sk-ant-your-key-here
 ```
 
 #### "Chrome extension not detected" (claude-code-chrome)
@@ -722,7 +735,7 @@ export ANTHROPIC_API_KEY=sk-ant-your-key-here
 
 1. Ensure the Playwriter Chrome extension is installed
 2. Make sure Chrome is running with the extension enabled
-3. Try restarting the npx server: `npx playwriter`
+3. Try restarting the npx server: `npx playwriter@latest`
 
 #### "Firecrawl: 401 Unauthorized"
 

@@ -4,7 +4,7 @@ This document describes how the Browser Automation Benchmark conducts its evalua
 
 ## Overview
 
-The benchmark suite evaluates 5 browser automation tools across 6 primary scenarios, measuring:
+The benchmark suite evaluates 8 browser automation tools across 6 primary scenarios, measuring:
 
 1. **Execution Time** - How long the task takes to complete
 2. **Success Rate** - Whether the task completed without errors
@@ -205,7 +205,6 @@ Based on [Anthropic's official pricing](https://platform.claude.com/docs/en/abou
 | Claude Opus 4.5 | $5.00 | $25.00 |
 | Claude Sonnet 4.5 | $3.00 | $15.00 |
 | Claude Haiku 4.5 | $1.00 | $5.00 |
-| ChatBrowserUse | $0.20 | $2.00 |
 
 **Recommended**: Use **Claude Opus 4.5** (`claude-opus-4-5`) for running benchmarks through Claude Code for best results.
 

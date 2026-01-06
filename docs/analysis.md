@@ -462,7 +462,7 @@ flowchart TB
 ### Code Example
 
 ```typescript
-import { Stagehand } from "@browserbase/stagehand";
+import { Stagehand } from "@browserbasehq/stagehand";
 import { z } from "zod";
 
 const stagehand = new Stagehand({ env: "LOCAL" });

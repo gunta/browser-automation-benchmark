@@ -281,7 +281,7 @@ await agent.run()
   "mcpServers": {
     "browserbase": {
       "command": "npx",
-      "args": ["@anthropic-ai/mcp-server-browserbase"]
+      "args": ["@browserbasehq/mcp-server-browserbase"]
     }
   }
 }
@@ -438,7 +438,7 @@ const data = await page.locator('.content').textContent();
 **Best for**: AI-powered browser automation with natural language commands
 
 ```typescript
-import { Stagehand } from "@browserbase/stagehand";
+import { Stagehand } from "@browserbasehq/stagehand";
 
 const stagehand = new Stagehand({ env: "LOCAL" });
 await stagehand.init();
@@ -499,8 +499,8 @@ bun install
 bunx playwright install chromium
 
 # Set up environment variables
-cp .env.example .env
-# Edit .env with your API keys (see docs/setup.md for details)
+touch .env
+# Paste the template from docs/setup.md and fill in your API keys
 ```
 
 ### Running Benchmarks
