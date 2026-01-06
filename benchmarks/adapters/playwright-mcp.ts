@@ -310,10 +310,12 @@ export class PlaywrightMCPAdapter extends BaseAdapter {
 
   /**
    * Get the accessibility tree snapshot (Playwright MCP's key feature)
+   * Note: Uses ariaSnapshot() in Playwright 1.50+
    */
-  async getAccessibilitySnapshot(): Promise<unknown> {
+  async getAccessibilitySnapshot(): Promise<string> {
     const page = this.ensurePage();
-    return page.accessibility.snapshot();
+    // In Playwright 1.50+, use locator().ariaSnapshot() instead of deprecated accessibility.snapshot()
+    return page.locator("body").ariaSnapshot();
   }
 
   /**

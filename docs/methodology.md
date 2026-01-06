@@ -44,6 +44,9 @@ flowchart LR
 | firecrawl | REST API | HTTP endpoints |
 | browser-use | Python Library | Agent with LLM reasoning |
 | dev3000 | CLI + MCP | Debugging-focused tools |
+| claude-code-chrome | CLI + Extension | Natural language commands via `claude --chrome` |
+| stagehand | TypeScript SDK | `act()`, `extract()`, `observe()` methods |
+| browserbase-mcp | MCP Server | Stagehand tools + cloud browser sessions |
 
 ## Benchmark Scenarios
 
@@ -218,18 +221,21 @@ Not all adapters support all scenarios. When an adapter doesn't support a requir
 
 ### Supported Capabilities by Adapter
 
-| Capability | playwright-mcp | playwriter | firecrawl | browser-use | dev3000 |
-|------------|:--------------:|:----------:|:---------:|:-----------:|:-------:|
-| Navigation | ✅ | ✅ | ⚠️ | ✅ | ✅ |
-| Scraping | ✅ | ✅ | ✅ | ✅ | ⚠️ |
-| Interaction | ✅ | ✅ | ⚠️ | ✅ | ✅ |
-| Forms | ✅ | ✅ | ⚠️ | ✅ | ✅ |
-| Screenshots | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Console Logs | ✅ | ✅ | ❌ | ✅ | ✅ |
-| Network Logs | ✅ | ✅ | ❌ | ✅ | ✅ |
-| Search | ❌ | ❌ | ✅ | ✅ | ❌ |
-| Structured | ✅ | ✅ | ✅ | ✅ | ❌ |
-| AI Tasks | ❌ | ❌ | ❌ | ✅ | ❌ |
+| Capability | playwright-mcp | playwriter | firecrawl | browser-use | dev3000 | claude-code | stagehand | browserbase |
+|------------|:--------------:|:----------:|:---------:|:-----------:|:-------:|:-----------:|:---------:|:-----------:|
+| Navigation | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Scraping | ✅ | ✅ | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ |
+| Interaction | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Forms | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Screenshots | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Console Logs | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Network Logs | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ⚠️ | ✅ |
+| Search | ❌ | ❌ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
+| Structured | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ Excellent | ✅ Excellent |
+| AI Tasks | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | ✅ | ✅ |
+| GIF Recording | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ |
+| Live View | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Cloud Sessions | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ |
 
 ### Environment Normalization
 

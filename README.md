@@ -2,7 +2,7 @@
 
 **The definitive comparison of browser automation tools for AI agents**
 
-A comprehensive benchmark suite comparing **browser-use**, **dev3000**, **firecrawl**, **playwriter**, and **playwright-mcp** across real-world scenarios with measurable metrics including token usage, execution time, and quality of results.
+A comprehensive benchmark suite comparing **8 browser automation tools** across real-world scenarios with measurable metrics including token usage, execution time, and quality of results.
 
 ---
 
@@ -11,10 +11,13 @@ A comprehensive benchmark suite comparing **browser-use**, **dev3000**, **firecr
 | Tool | Primary Purpose | Best For | Language | MCP Support |
 |------|-----------------|----------|----------|-------------|
 | **[browser-use](https://github.com/browser-use/browser-use)** | AI Browser Agent | End-to-end browser automation with LLM reasoning | Python | ✅ Server |
+| **[browserbase-mcp](https://github.com/browserbase/mcp-server-browserbase)** | Cloud Browser MCP | Scalable cloud browser automation with Stagehand AI | TypeScript | ✅ Server |
+| **[claude-code-chrome](https://code.claude.com/docs/en/chrome.md)** | CLI Browser Control | Natural language browser automation from terminal | CLI | ❌ Native |
 | **[dev3000](https://github.com/vercel-labs/dev3000)** | Debugging Assistant | Capturing logs, errors, and screenshots during development | TypeScript | ✅ Server |
 | **[firecrawl](https://github.com/firecrawl/firecrawl)** | Web Scraping API | Converting websites to LLM-ready markdown/structured data | TypeScript | ✅ [Separate](https://github.com/firecrawl/firecrawl-mcp-server) |
 | **[playwriter](https://github.com/remorses/playwriter)** | MCP Browser Control | Full Playwright API via single `execute` tool | TypeScript | ✅ Client |
 | **[playwright-mcp](https://github.com/microsoft/playwright-mcp)** | MCP Browser Control | Structured browser automation via accessibility tree | TypeScript | ✅ Server |
+| **[stagehand](https://github.com/browserbase/stagehand)** | AI Browser SDK | Natural language browser control with multi-model support | TypeScript | Via browserbase-mcp |
 
 ---
 
@@ -22,49 +25,53 @@ A comprehensive benchmark suite comparing **browser-use**, **dev3000**, **firecr
 
 ### Core Capabilities
 
-| Feature | browser-use | dev3000 | firecrawl | playwriter | playwright-mcp |
-|---------|:-----------:|:-------:|:---------:|:----------:|:--------------:|
-| **Web Scraping** | ✅ | ⚠️ Limited | ✅ Excellent | ✅ | ✅ |
-| **Navigation & Clicks** | ✅ | ✅ | ⚠️ Actions | ✅ | ✅ |
-| **Form Filling** | ✅ | ✅ | ⚠️ Actions | ✅ | ✅ |
-| **Screenshot Capture** | ✅ | ✅ Auto | ✅ | ✅ | ✅ |
-| **Console Log Capture** | ✅ | ✅ Excellent | ❌ | ✅ | ✅ |
-| **Network Request Logging** | ✅ | ✅ Excellent | ❌ | ✅ | ✅ |
-| **PDF Generation** | ✅ | ❌ | ❌ | ✅ | ✅ Opt-in |
-| **Structured Data Extraction** | ✅ | ❌ | ✅ Excellent | ✅ | ✅ |
-| **Authentication Handling** | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **CAPTCHA Handling** | ✅ Cloud | ❌ | ✅ Cloud | ⚠️ Manual | ❌ |
+| Feature | browser-use | browserbase | claude-code | dev3000 | firecrawl | playwriter | playwright-mcp | stagehand |
+|---------|:-----------:|:-----------:|:-----------:|:-------:|:---------:|:----------:|:--------------:|:---------:|
+| **Web Scraping** | ✅ | ✅ | ✅ | ⚠️ Limited | ✅ Excellent | ✅ | ✅ | ✅ |
+| **Navigation & Clicks** | ✅ | ✅ | ✅ | ✅ | ⚠️ Actions | ✅ | ✅ | ✅ |
+| **Form Filling** | ✅ | ✅ | ✅ | ✅ | ⚠️ Actions | ✅ | ✅ | ✅ |
+| **Screenshot Capture** | ✅ | ✅ | ✅ | ✅ Auto | ✅ | ✅ | ✅ | ✅ |
+| **Console Log Capture** | ✅ | ✅ | ✅ | ✅ Excellent | ❌ | ✅ | ✅ | ✅ |
+| **Network Request Logging** | ✅ | ✅ | ✅ | ✅ Excellent | ❌ | ✅ | ✅ | ⚠️ |
+| **PDF Generation** | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ Opt-in | ✅ |
+| **Structured Data Extraction** | ✅ | ✅ Excellent | ✅ | ❌ | ✅ Excellent | ✅ | ✅ | ✅ Excellent |
+| **Authentication Handling** | ✅ | ✅ | ✅ Excellent | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **CAPTCHA Handling** | ✅ Cloud | ✅ Stealth | ⚠️ Manual | ❌ | ✅ Cloud | ⚠️ Manual | ❌ | ✅ Stealth |
+| **GIF Recording** | ❌ | ✅ Recording | ✅ Unique | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **Live Session View** | ❌ | ✅ Unique | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 
 ### Browser & Runtime
 
-| Feature | browser-use | dev3000 | firecrawl | playwriter | playwright-mcp |
-|---------|:-----------:|:-------:|:---------:|:----------:|:--------------:|
-| **Browser Engine** | Chromium (CDP) | Chrome (CDP + Extension) | Headless browsers | Chrome (Extension) | Chromium/Firefox/WebKit |
-| **Headless Mode** | ✅ | ✅ | ✅ | ❌ Uses real browser | ✅ |
-| **Persistent Profile** | ✅ | ✅ | N/A | ✅ Reuses yours | ✅ |
-| **Multiple Tabs** | ✅ | ✅ | N/A | ✅ | ✅ |
-| **Proxy Support** | ✅ | ❌ | ✅ | ✅ | ✅ |
-| **Cloud Hosting** | ✅ Browser Use Cloud | ❌ | ✅ Firecrawl Cloud | ❌ | ❌ |
+| Feature | browser-use | browserbase | claude-code | dev3000 | firecrawl | playwriter | playwright-mcp | stagehand |
+|---------|:-----------:|:-----------:|:-----------:|:-------:|:---------:|:----------:|:--------------:|:---------:|
+| **Browser Engine** | Chromium (CDP) | Cloud Chromium | Chrome (Extension) | Chrome (CDP + Ext) | Headless | Chrome (Extension) | Chromium/FF/WebKit | Chromium |
+| **Headless Mode** | ✅ | ✅ Cloud | ❌ Visible | ✅ | ✅ | ❌ Real browser | ✅ | ✅ |
+| **Persistent Profile** | ✅ | ✅ Sessions | ✅ Uses yours | ✅ | N/A | ✅ Reuses yours | ✅ | ✅ |
+| **Multiple Tabs** | ✅ | ✅ | ✅ | ✅ | N/A | ✅ | ✅ | ✅ |
+| **Proxy Support** | ✅ | ✅ Built-in | ✅ Via Chrome | ❌ | ✅ | ✅ | ✅ | ✅ |
+| **Cloud Hosting** | ✅ BU Cloud | ✅ Browserbase | ❌ | ❌ | ✅ Firecrawl | ❌ | ❌ | ✅ Browserbase |
+| **Parallel Sessions** | ⚠️ | ✅ Excellent | ❌ | ❌ | ✅ | ❌ | ❌ | ✅ |
 
 ### LLM Integration
 
-| Feature | browser-use | dev3000 | firecrawl | playwriter | playwright-mcp |
-|---------|:-----------:|:-------:|:---------:|:----------:|:--------------:|
-| **Native LLM Support** | ✅ Multi-provider | Via MCP | API-based | Via MCP | Via MCP |
-| **Vision/Screenshots to LLM** | ✅ | ✅ | ✅ | ✅ Accessibility snapshots | ⚠️ Opt-in |
-| **Context Window Efficiency** | Medium | Medium | High | High (90% less) | High |
-| **Custom System Prompts** | ✅ | ❌ | N/A | ✅ | ❌ |
-| **Tool Count** | Many actions | 5 tools | API endpoints | 1 tool (`execute`) | 20+ tools |
+| Feature | browser-use | browserbase | claude-code | dev3000 | firecrawl | playwriter | playwright-mcp | stagehand |
+|---------|:-----------:|:-----------:|:-----------:|:-------:|:---------:|:----------:|:--------------:|:---------:|
+| **Native LLM Support** | ✅ Multi-provider | ✅ Multi-provider | ✅ Claude built-in | Via MCP | API-based | Via MCP | Via MCP | ✅ Multi-provider |
+| **Vision/Screenshots to LLM** | ✅ | ✅ | ✅ Native | ✅ | ✅ | ✅ A11y snapshots | ⚠️ Opt-in | ✅ Vision |
+| **Context Window Efficiency** | Medium | High | High | Medium | High | High (90% less) | High | High |
+| **Custom System Prompts** | ✅ | ✅ | ❌ | ❌ | N/A | ✅ | ❌ | ✅ |
+| **Tool Count** | Many actions | 10+ MCP tools | Natural language | 5 tools | API endpoints | 1 tool (`execute`) | 20+ tools | 3 methods |
 
 ### Developer Experience
 
-| Feature | browser-use | dev3000 | firecrawl | playwriter | playwright-mcp |
-|---------|:-----------:|:-------:|:---------:|:----------:|:--------------:|
-| **Setup Complexity** | Medium | Easy | Easy (API key) | Easy | Easy |
-| **Documentation** | ✅ Excellent | ✅ Good | ✅ Excellent | ✅ Good | ✅ Excellent |
-| **TypeScript Support** | ❌ Python only | ✅ Native | ✅ SDK available | ✅ Native | ✅ Native |
-| **Python Support** | ✅ Native | ❌ | ✅ SDK available | ❌ | ❌ |
-| **Open Source** | ✅ | ✅ | ✅ AGPL-3.0 | ✅ | ✅ |
+| Feature | browser-use | browserbase | claude-code | dev3000 | firecrawl | playwriter | playwright-mcp | stagehand |
+|---------|:-----------:|:-----------:|:-----------:|:-------:|:---------:|:----------:|:--------------:|:---------:|
+| **Setup Complexity** | Medium | Easy (API key) | Easy (CLI + ext) | Easy | Easy (API key) | Easy | Easy | Easy |
+| **Documentation** | ✅ Excellent | ✅ Excellent | ✅ Excellent | ✅ Good | ✅ Excellent | ✅ Good | ✅ Excellent | ✅ Excellent |
+| **TypeScript Support** | ❌ Python only | ✅ Native | N/A (CLI) | ✅ Native | ✅ SDK available | ✅ Native | ✅ Native | ✅ Native |
+| **Python Support** | ✅ Native | ❌ | N/A (CLI) | ❌ | ✅ SDK available | ❌ | ❌ | ❌ |
+| **Open Source** | ✅ | ✅ | ❌ Proprietary | ✅ | ✅ AGPL-3.0 | ✅ | ✅ | ✅ MIT |
+| **Pricing** | Free/Cloud | Usage-based | Claude Pro+ | Free | Free/Cloud | Free | Free | Free + LLM costs |
 
 ---
 
@@ -81,12 +88,25 @@ flowchart TB
         BU_CDP --> BU_Browser[Chromium]
     end
 
+    subgraph Browserbase["browserbase-mcp + stagehand"]
+        BB_MCP[MCP Client] --> BB_Server[MCP Server]
+        BB_Server --> BB_Stagehand[Stagehand SDK]
+        BB_Stagehand --> BB_Cloud[Browserbase Cloud]
+        BB_Cloud --> BB_Browsers[Cloud Browsers]
+    end
+
+    subgraph ClaudeCode["claude-code-chrome"]
+        CC_CLI[Claude Code CLI] --> CC_Native[Native Messaging API]
+        CC_Native --> CC_Extension[Claude in Chrome Extension]
+        CC_Extension --> CC_Browser[Chrome Browser]
+        CC_Browser --> CC_Tabs[Your Logged-in Sessions]
+    end
+
     subgraph Dev3000["dev3000"]
         D3_CLI[CLI] --> D3_Server[Dev Server Monitor]
         D3_Server --> D3_Browser[Headless Browser]
         D3_Browser --> D3_Extension[Chrome Extension]
         D3_Server --> D3_MCP[MCP Server]
-        D3_MCP --> D3_Claude[Claude Code]
     end
 
     subgraph Firecrawl["firecrawl"]
@@ -113,12 +133,12 @@ flowchart TB
 
 ### Interaction Model Comparison
 
-| Aspect | browser-use | dev3000 | firecrawl | playwriter | playwright-mcp |
-|--------|-------------|---------|-----------|------------|----------------|
-| **Input** | Task description | "fix my app" | URL + options | Playwright code | Element refs |
-| **Processing** | LLM decides actions | Analyzes logs | Crawls & parses | Executes code | Accessibility tree |
-| **Output** | Task completion | Fix suggestions | Markdown/JSON | Execution result | Structured data |
-| **Feedback Loop** | Yes, multi-step | Yes, via MCP | No | Yes | Yes |
+| Aspect | browser-use | browserbase | claude-code | dev3000 | firecrawl | playwriter | playwright-mcp | stagehand |
+|--------|-------------|-------------|-------------|---------|-----------|------------|----------------|-----------|
+| **Input** | Task description | MCP tools / NL | Natural language | "fix my app" | URL + options | Playwright code | Element refs | act/extract/observe |
+| **Processing** | LLM decides | Stagehand AI | Claude interprets | Analyzes logs | Crawls & parses | Executes code | A11y tree | LLM decides |
+| **Output** | Task completion | Structured data | Task completion | Fix suggestions | Markdown/JSON | Execution result | Structured data | Typed results |
+| **Feedback Loop** | Yes, multi-step | Yes | Yes, interactive | Yes, via MCP | No | Yes | Yes | Yes |
 
 ---
 
@@ -137,8 +157,6 @@ All benchmark costs calculated using [Anthropic's official pricing](https://plat
 | Model | Input (per 1M tokens) | Output (per 1M tokens) |
 |-------|----------------------:|------------------------:|
 | **Claude Opus 4.5** | $5.00 | $25.00 |
-| Claude Sonnet 4.5 | $3.00 | $15.00 |
-| Claude Haiku 4.5 | $1.00 | $5.00 |
 
 ### Scenario 1: Web Scraping
 **Task**: Extract top 5 Hacker News stories (title, points, author, URL)
@@ -146,10 +164,13 @@ All benchmark costs calculated using [Anthropic's official pricing](https://plat
 | Tool | Tokens Used | Time (s) | Success | Quality |
 |------|-------------|----------|---------|---------|
 | browser-use | TBD | TBD | TBD | TBD |
+| browserbase-mcp | TBD | TBD | TBD | TBD |
+| claude-code-chrome | TBD | TBD | TBD | TBD |
 | dev3000 | N/A | N/A | N/A | N/A |
 | firecrawl | TBD | TBD | TBD | TBD |
 | playwriter | TBD | TBD | TBD | TBD |
 | playwright-mcp | TBD | TBD | TBD | TBD |
+| stagehand | TBD | TBD | TBD | TBD |
 
 ### Scenario 2: Navigation & Interaction
 **Task**: Navigate to a site, click through 3 pages, capture final state
@@ -157,10 +178,13 @@ All benchmark costs calculated using [Anthropic's official pricing](https://plat
 | Tool | Tokens Used | Time (s) | Success | Quality |
 |------|-------------|----------|---------|---------|
 | browser-use | TBD | TBD | TBD | TBD |
+| browserbase-mcp | TBD | TBD | TBD | TBD |
+| claude-code-chrome | TBD | TBD | TBD | TBD |
 | dev3000 | TBD | TBD | TBD | TBD |
 | firecrawl | N/A | N/A | N/A | N/A |
 | playwriter | TBD | TBD | TBD | TBD |
 | playwright-mcp | TBD | TBD | TBD | TBD |
+| stagehand | TBD | TBD | TBD | TBD |
 
 ### Scenario 3: Debugging & Log Capture
 **Task**: Load page with JS errors, capture and report all errors
@@ -168,10 +192,13 @@ All benchmark costs calculated using [Anthropic's official pricing](https://plat
 | Tool | Tokens Used | Time (s) | Errors Found | Log Completeness |
 |------|-------------|----------|--------------|------------------|
 | browser-use | TBD | TBD | TBD | TBD |
+| browserbase-mcp | TBD | TBD | TBD | TBD |
+| claude-code-chrome | TBD | TBD | TBD | TBD |
 | dev3000 | TBD | TBD | TBD | TBD |
 | firecrawl | N/A | N/A | N/A | N/A |
 | playwriter | TBD | TBD | TBD | TBD |
 | playwright-mcp | TBD | TBD | TBD | TBD |
+| stagehand | TBD | TBD | TBD | TBD |
 
 ### Scenario 4: Form Filling
 **Task**: Fill multi-field contact form with validation
@@ -179,10 +206,13 @@ All benchmark costs calculated using [Anthropic's official pricing](https://plat
 | Tool | Tokens Used | Time (s) | Fields Correct | Validation Handled |
 |------|-------------|----------|----------------|-------------------|
 | browser-use | TBD | TBD | TBD | TBD |
+| browserbase-mcp | TBD | TBD | TBD | TBD |
+| claude-code-chrome | TBD | TBD | TBD | TBD |
 | dev3000 | TBD | TBD | TBD | TBD |
 | firecrawl | N/A | N/A | N/A | N/A |
 | playwriter | TBD | TBD | TBD | TBD |
 | playwright-mcp | TBD | TBD | TBD | TBD |
+| stagehand | TBD | TBD | TBD | TBD |
 
 ### Scenario 5: Web Search
 **Task**: Search "weather Tokyo tomorrow", extract the answer
@@ -190,10 +220,13 @@ All benchmark costs calculated using [Anthropic's official pricing](https://plat
 | Tool | Tokens Used | Time (s) | Answer Found | Accuracy |
 |------|-------------|----------|--------------|----------|
 | browser-use | TBD | TBD | TBD | TBD |
+| browserbase-mcp | TBD | TBD | TBD | TBD |
+| claude-code-chrome | TBD | TBD | TBD | TBD |
 | dev3000 | N/A | N/A | N/A | N/A |
 | firecrawl | TBD | TBD | TBD | TBD |
 | playwriter | TBD | TBD | TBD | TBD |
 | playwright-mcp | TBD | TBD | TBD | TBD |
+| stagehand | TBD | TBD | TBD | TBD |
 
 ### Scenario 6: Structured Data Extraction
 **Task**: Extract product data into JSON schema
@@ -201,10 +234,13 @@ All benchmark costs calculated using [Anthropic's official pricing](https://plat
 | Tool | Tokens Used | Time (s) | Schema Valid | Data Accuracy |
 |------|-------------|----------|--------------|---------------|
 | browser-use | TBD | TBD | TBD | TBD |
+| browserbase-mcp | TBD | TBD | TBD | TBD |
+| claude-code-chrome | TBD | TBD | TBD | TBD |
 | dev3000 | N/A | N/A | N/A | N/A |
 | firecrawl | TBD | TBD | TBD | TBD |
 | playwriter | TBD | TBD | TBD | TBD |
 | playwright-mcp | TBD | TBD | TBD | TBD |
+| stagehand | TBD | TBD | TBD | TBD |
 
 ---
 
@@ -233,6 +269,71 @@ await agent.run()
 - Python only (no TypeScript/JavaScript)
 - Higher token usage due to comprehensive context
 - Requires more setup for local development
+
+---
+
+### browserbase-mcp
+**Best for**: Scalable cloud browser automation with AI capabilities
+
+```typescript
+// Configure MCP server in your client
+{
+  "mcpServers": {
+    "browserbase": {
+      "command": "npx",
+      "args": ["@anthropic-ai/mcp-server-browserbase"]
+    }
+  }
+}
+
+// Stagehand tools available via MCP:
+// - stagehand_act: Perform AI-guided actions
+// - stagehand_extract: Extract structured data
+// - stagehand_observe: Get page state
+```
+
+**Strengths**:
+- Cloud browser sessions (no local browser needed)
+- Parallel session support for scale
+- Advanced stealth mode for anti-bot bypassing
+- Session recording and live view
+- Combines Stagehand AI with cloud infrastructure
+
+**Weaknesses**:
+- Requires Browserbase API key
+- Cloud-only (no local mode)
+- Usage-based pricing
+
+---
+
+### claude-code-chrome
+**Best for**: Natural language browser automation with access to your logged-in sessions
+
+```bash
+# Start Claude Code with Chrome integration
+claude --chrome
+
+# Then describe what you want:
+# "Go to Gmail, find emails from John, and summarize them"
+# "Fill out this form on the CRM with data from contacts.csv"
+# "Record a GIF showing the checkout flow"
+```
+
+**Strengths**:
+- Natural language task execution (no code required)
+- Uses your existing browser session & logins
+- Access authenticated apps (Google Docs, Gmail, Notion, etc.)
+- GIF recording of browser interactions
+- Live debugging with console access
+- No separate API keys needed
+
+**Weaknesses**:
+- Requires paid Claude plan (Pro/Team/Enterprise)
+- No headless mode (browser must be visible)
+- Chrome-only (no Firefox/Safari/WebKit)
+- Beta feature (still evolving)
+
+**Learn more**: [Claude Code Chrome documentation](https://code.claude.com/docs/en/chrome.md)
 
 ---
 
@@ -333,9 +434,55 @@ const data = await page.locator('.content').textContent();
 
 ---
 
+### stagehand
+**Best for**: AI-powered browser automation with natural language commands
+
+```typescript
+import { Stagehand } from "@browserbase/stagehand";
+
+const stagehand = new Stagehand({ env: "LOCAL" });
+await stagehand.init();
+
+// Natural language actions
+await stagehand.act({ action: "Click the login button" });
+
+// Type-safe extraction with Zod schemas
+const data = await stagehand.extract({
+  instruction: "Extract all product prices",
+  schema: z.object({
+    products: z.array(z.object({
+      name: z.string(),
+      price: z.number(),
+    })),
+  }),
+});
+
+// Observe page state
+const state = await stagehand.observe();
+```
+
+**Strengths**:
+- Natural language actions via `act()`
+- Type-safe extraction with Zod schemas
+- Multi-model support (GPT-4, Claude)
+- Vision capabilities for element detection
+- Caching for performance optimization
+- Can run locally or with Browserbase cloud
+
+**Weaknesses**:
+- Requires LLM API key (OpenAI or Anthropic)
+- Higher latency due to LLM calls
+- Token costs for AI operations
+
+**Learn more**: [Stagehand documentation](https://docs.stagehand.dev/)
+
+---
+
 ## 🔧 Running the Benchmarks
 
-### Prerequisites
+> **📖 Full Setup Guide**: See [docs/setup.md](docs/setup.md) for complete installation instructions for all 8 tools.
+
+### Quick Start
 
 ```bash
 # Install Bun
@@ -348,12 +495,15 @@ cd browser-automation-benchmark
 # Install dependencies
 bun install
 
+# Install Playwright browsers
+bunx playwright install chromium
+
 # Set up environment variables
 cp .env.example .env
-# Edit .env with your API keys
+# Edit .env with your API keys (see docs/setup.md for details)
 ```
 
-### Running All Benchmarks
+### Running Benchmarks
 
 ```bash
 # Run full benchmark suite
@@ -366,14 +516,21 @@ bun run benchmark:debugging
 bun run benchmark:forms
 bun run benchmark:search
 bun run benchmark:structured
+
+# Run specific adapter
+bun run benchmark --adapter=playwright-mcp
+
+# Run multiple adapters
+bun run benchmark --adapter=stagehand,firecrawl,browserbase-mcp
 ```
 
 ### Viewing Results
 
-Results are automatically saved to `docs/results.md` and can be viewed with:
-
 ```bash
+# Display formatted results
 bun run results
+
+# Results are also saved to docs/results.md
 ```
 
 ### Token Usage Tracking
@@ -381,9 +538,6 @@ bun run results
 This benchmark uses [ccusage](https://ccusage.com/guide/) to track Claude Code token consumption:
 
 ```bash
-# Install ccusage
-bunx ccusage
-
 # View daily usage
 bunx ccusage daily
 
@@ -395,6 +549,7 @@ bunx ccusage session
 
 ## 📚 Documentation
 
+- [**Setup Guide**](docs/setup.md) - Complete installation instructions for all tools
 - [Methodology](docs/methodology.md) - How benchmarks are conducted
 - [Results](docs/results.md) - Detailed benchmark results
 - [Analysis](docs/analysis.md) - In-depth analysis of each tool

@@ -351,40 +351,241 @@ dev3000
 
 ---
 
+## claude-code-chrome
+
+### Overview
+
+Claude Code's Chrome integration is Anthropic's native browser automation solution, letting you control Chrome directly from the terminal using natural language. It connects via the Claude in Chrome extension and uses your existing browser session.
+
+### Architecture
+
+```mermaid
+flowchart TB
+    subgraph Terminal["Terminal"]
+        CLI["Claude Code CLI<br/>(claude --chrome)"]
+    end
+    
+    subgraph Native["Native Messaging"]
+        NM["Chrome Native Messaging API"]
+    end
+    
+    subgraph Extension["Claude in Chrome Extension"]
+        Ext["Extension Background Script"]
+        Tools["Browser Tools"]
+    end
+    
+    subgraph Chrome["Chrome Browser"]
+        Tabs["Your Tabs & Sessions"]
+        Auth["Logged-in Apps<br/>(Gmail, Docs, etc.)"]
+    end
+    
+    Terminal -->|"Commands"| Native
+    Native -->|"Execute"| Extension
+    Extension --> Chrome
+    Tabs --> Auth
+```
+
+### Key Features
+
+1. **Natural Language**: Describe tasks in plain English, no code needed
+2. **Session Reuse**: Uses your existing logins and browser state
+3. **GIF Recording**: Unique ability to record interactions as GIFs
+4. **Authenticated Apps**: Access Google Docs, Gmail, Notion without APIs
+5. **Live Debugging**: Read console logs and debug in real-time
+
+### When to Use
+
+- Tasks requiring your logged-in accounts
+- Multi-site workflows that need authentication
+- Quick automation without writing code
+- Recording demos or documentation
+- Debugging with AI assistance
+
+### When to Avoid
+
+- Need headless/CI automation
+- Require Firefox/Safari support
+- Don't have Claude Pro/Team/Enterprise
+- Need fully open-source solution
+
+### Code Example
+
+```bash
+# Start Claude Code with Chrome
+claude --chrome
+
+# Example tasks you can give:
+# "Go to news.ycombinator.com and extract the top 5 stories"
+# "Fill out the contact form on my-site.com with test data"
+# "Record a GIF showing the login flow"
+# "Check my Gmail for emails from John and summarize them"
+```
+
+---
+
+## stagehand
+
+### Overview
+
+Stagehand is an AI-powered browser automation SDK by Browserbase that uses natural language to control browsers. It provides three core methods: `act()` for actions, `extract()` for structured data extraction, and `observe()` for page state.
+
+### Architecture
+
+```mermaid
+flowchart TB
+    subgraph SDK["Stagehand SDK"]
+        Act["act()"] --> LLM[LLM Provider]
+        Extract["extract()"] --> LLM
+        Observe["observe()"] --> LLM
+    end
+    
+    subgraph Browser["Browser"]
+        LLM --> PW[Playwright]
+        PW --> Page[Web Page]
+    end
+    
+    subgraph Output["Output"]
+        Page --> Vision[Vision Analysis]
+        Vision --> DOM[DOM Processing]
+        DOM --> Result[Typed Results]
+    end
+```
+
+### Key Features
+
+1. **Natural Language Actions**: `act({ action: "Click the submit button" })`
+2. **Zod Schema Extraction**: Type-safe data extraction with schemas
+3. **Multi-model Support**: Works with GPT-4, Claude, and more
+4. **Vision Capabilities**: Uses screenshots for element detection
+5. **Caching**: Performance optimization for repeated operations
+
+### Code Example
+
+```typescript
+import { Stagehand } from "@browserbase/stagehand";
+import { z } from "zod";
+
+const stagehand = new Stagehand({ env: "LOCAL" });
+await stagehand.init();
+
+// Natural language action
+await stagehand.act({ action: "Search for 'AI automation'" });
+
+// Type-safe extraction
+const products = await stagehand.extract({
+  instruction: "Extract all products",
+  schema: z.object({
+    items: z.array(z.object({
+      name: z.string(),
+      price: z.number(),
+    })),
+  }),
+});
+```
+
+---
+
+## browserbase-mcp
+
+### Overview
+
+Browserbase MCP Server combines Stagehand's AI capabilities with Browserbase's cloud browser infrastructure. It provides MCP tools for both traditional browser automation and AI-powered interactions.
+
+### Architecture
+
+```mermaid
+flowchart TB
+    subgraph MCP["MCP Server"]
+        Tools["MCP Tools"]
+    end
+    
+    subgraph Stagehand["Stagehand AI"]
+        Act["stagehand_act"]
+        Extract["stagehand_extract"]
+        Observe["stagehand_observe"]
+    end
+    
+    subgraph Browser["Browser Tools"]
+        Navigate["browserbase_navigate"]
+        Click["browserbase_click"]
+        Fill["browserbase_fill"]
+        Screenshot["browserbase_screenshot"]
+    end
+    
+    subgraph Cloud["Browserbase Cloud"]
+        Sessions["Session Management"]
+        Recording["Session Recording"]
+        LiveView["Live View"]
+        Proxy["Proxy & Stealth"]
+    end
+    
+    MCP --> Stagehand
+    MCP --> Browser
+    Stagehand --> Cloud
+    Browser --> Cloud
+```
+
+### Key Features
+
+1. **Cloud Browser Sessions**: No local browser needed
+2. **Parallel Sessions**: Scale to many concurrent browsers
+3. **Advanced Stealth**: Bypass anti-bot detection
+4. **Session Recording**: Automatic recording of all interactions
+5. **Live View**: Watch browser sessions in real-time
+6. **Stagehand Integration**: Full AI capabilities via MCP
+
+### When to Use
+
+- Large-scale web automation
+- Tasks requiring anti-bot bypassing
+- Need for session recording/auditing
+- Parallel browser operations
+- Production deployments without local browser dependencies
+
+---
+
 ## Comparison Matrix
 
 ### Feature Comparison
 
-| Feature | playwright-mcp | playwriter | firecrawl | browser-use | dev3000 |
-|---------|:--------------:|:----------:|:---------:|:-----------:|:-------:|
-| Browser Control | Full | Full | Limited | Full | Limited |
-| Headless Mode | ✅ | ❌ | ✅ | ✅ | ✅ |
-| Cross-Browser | ✅ | ❌ Chrome | N/A | ❌ Chromium | ❌ Chrome |
-| LLM Integration | Via MCP | Via MCP | API | Native | Via MCP |
-| Cloud Option | ❌ | ❌ | ✅ | ✅ | ❌ |
-| Structured Output | ✅ | ✅ | ✅ | ✅ | ❌ |
-| Token Efficiency | Medium | High | N/A | Low | Medium |
+| Feature | playwright-mcp | playwriter | firecrawl | browser-use | dev3000 | claude-code | stagehand | browserbase |
+|---------|:--------------:|:----------:|:---------:|:-----------:|:-------:|:-----------:|:---------:|:-----------:|
+| Browser Control | Full | Full | Limited | Full | Limited | Full | Full | Full |
+| Headless Mode | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ Cloud |
+| Cross-Browser | ✅ | ❌ Chrome | N/A | ❌ Chromium | ❌ Chrome | ❌ Chrome | Chromium | Chromium |
+| LLM Integration | Via MCP | Via MCP | API | Native | Via MCP | Native | Native | Native |
+| Cloud Option | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ |
+| Structured Output | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ Zod | ✅ Zod |
+| Token Efficiency | Medium | High | N/A | Low | Medium | High | High | High |
+| Session Reuse | ❌ | ✅ | N/A | ❌ | ✅ | ✅ | ✅ | ✅ |
+| GIF Recording | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ |
+| Live View | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
 
 ### Performance Characteristics
 
-| Metric | playwright-mcp | playwriter | firecrawl | browser-use | dev3000 |
-|--------|:--------------:|:----------:|:---------:|:-----------:|:-------:|
-| Setup Complexity | Low | Medium | Low | Medium | Low |
-| Execution Speed | Fast | Fast | Fast | Slow | Fast |
-| Reliability | High | High | High | Medium | High |
-| Flexibility | Medium | High | Low | High | Low |
+| Metric | playwright-mcp | playwriter | firecrawl | browser-use | dev3000 | claude-code | stagehand | browserbase |
+|--------|:--------------:|:----------:|:---------:|:-----------:|:-------:|:-----------:|:---------:|:-----------:|
+| Setup Complexity | Low | Medium | Low | Medium | Low | Low | Low | Low |
+| Execution Speed | Fast | Fast | Fast | Slow | Fast | Medium | Medium | Medium |
+| Reliability | High | High | High | Medium | High | High | High | High |
+| Flexibility | Medium | High | Low | High | Low | High | High | High |
 
 ### Use Case Fit
 
 | Use Case | Best Tool | Alternative |
 |----------|-----------|-------------|
-| Web Scraping | firecrawl | browser-use |
-| Form Automation | playwright-mcp | playwriter |
+| Web Scraping | firecrawl | stagehand |
+| Form Automation | playwright-mcp | stagehand |
 | E2E Testing | playwright-mcp | playwriter |
 | RAG Pipelines | firecrawl | browser-use |
-| AI Agents | browser-use | playwright-mcp |
-| Debugging | dev3000 | playwright-mcp |
+| AI Agents | browser-use | stagehand |
+| Debugging | dev3000 | claude-code |
 | Low Token Usage | playwriter | firecrawl |
+| Authenticated Apps | claude-code | playwriter |
+| Recording Demos | claude-code | browserbase |
+| Type-safe Extraction | stagehand | firecrawl |
+| Cloud Scale | browserbase | firecrawl |
+| Anti-bot Bypass | browserbase | firecrawl |
 
 ---
 
@@ -392,23 +593,31 @@ dev3000
 
 ### For Beginners
 
-Start with **playwright-mcp** - it has the most structured approach with clear, well-documented tools. The official Microsoft backing means excellent documentation and support.
+Start with **stagehand** for a great developer experience with natural language and type-safe extraction. Or use **claude-code-chrome** if you have a Claude subscription - no code required, just describe what you want.
 
 ### For AI Agent Developers
 
-Use **browser-use** for complex tasks that require reasoning, or **playwriter** if token efficiency is critical and you need full Playwright API access.
+Use **browser-use** for complex tasks that require reasoning, or **stagehand** for TypeScript projects with type-safe extraction via Zod schemas.
 
 ### For Data Engineers
 
-**Firecrawl** is purpose-built for web scraping and data extraction. It handles the hard parts (anti-bot, dynamic content) so you can focus on your pipeline.
+**Firecrawl** is purpose-built for web scraping. **Stagehand** is excellent if you need AI-powered extraction with Zod schemas for type safety.
 
 ### For Web Developers
 
-**Dev3000** integrates naturally into your development workflow, providing AI-assisted debugging without changing how you build.
+**Dev3000** integrates naturally into your development workflow. **Stagehand** provides an excellent SDK experience for browser automation in TypeScript projects.
 
-### For Production Systems
+### For Authenticated Workflows
 
-Consider **browser-use** with Browser Use Cloud, or self-host **firecrawl** for scraping workloads. Both offer production-ready infrastructure.
+**Claude Code Chrome** excels when you need to interact with apps you're already logged into (Google Docs, Gmail, Notion, etc.) - no API keys required.
+
+### For Production Systems at Scale
+
+**Browserbase MCP** provides cloud browser infrastructure with parallel sessions, stealth mode, and session recording. **Firecrawl Cloud** is excellent for scraping workloads.
+
+### For Type-safe Data Extraction
+
+**Stagehand** with its Zod schema support is the best choice when you need strongly-typed extracted data that integrates seamlessly with TypeScript codebases.
 
 ---
 
@@ -428,6 +637,9 @@ Consider **browser-use** with Browser Use Cloud, or self-host **firecrawl** for 
 - **firecrawl**: Expanding LLM extraction capabilities
 - **browser-use**: Adding more LLM providers and cloud features
 - **dev3000**: Deepening IDE integrations
+- **claude-code-chrome**: Expanding capabilities as beta matures, potentially adding more browsers
+- **stagehand**: Maturing SDK with broader model support and caching improvements
+- **browserbase-mcp**: Expanding cloud infrastructure and stealth capabilities
 
 ---
 
@@ -440,5 +652,8 @@ There's no single "best" browser automation tool - each has distinct strengths:
 - **firecrawl**: Scraping and extraction
 - **browser-use**: AI reasoning and complexity
 - **dev3000**: Development and debugging
+- **claude-code-chrome**: Natural language and authenticated workflows
+- **stagehand**: Type-safe extraction and developer experience
+- **browserbase-mcp**: Cloud scale and anti-bot bypass
 
 Choose based on your specific needs, and don't hesitate to use multiple tools for different parts of your workflow.

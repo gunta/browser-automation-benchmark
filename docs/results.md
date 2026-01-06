@@ -185,6 +185,9 @@ Debugging assistant for web app development.
 | playwriter | TBD | TBD | TBD | TBD |
 | firecrawl | TBD | TBD | TBD | TBD |
 | browser-use | TBD | TBD | TBD | TBD |
+| browserbase-mcp | TBD | TBD | TBD | TBD |
+| claude-code-chrome | TBD | TBD | TBD | TBD |
+| stagehand | TBD | TBD | TBD | TBD |
 | dev3000 | N/A | N/A | N/A | N/A |
 
 ---
@@ -199,6 +202,9 @@ Debugging assistant for web app development.
 | playwriter | TBD | TBD | TBD | TBD |
 | firecrawl | N/A | N/A | N/A | N/A |
 | browser-use | TBD | TBD | TBD | TBD |
+| browserbase-mcp | TBD | TBD | TBD | TBD |
+| claude-code-chrome | TBD | TBD | TBD | TBD |
+| stagehand | TBD | TBD | TBD | TBD |
 | dev3000 | TBD | TBD | TBD | TBD |
 
 ---
@@ -213,6 +219,9 @@ Debugging assistant for web app development.
 | playwriter | TBD | TBD | TBD | TBD |
 | firecrawl | N/A | N/A | N/A | N/A |
 | browser-use | TBD | TBD | TBD | TBD |
+| browserbase-mcp | TBD | TBD | TBD | TBD |
+| claude-code-chrome | TBD | TBD | TBD | TBD |
+| stagehand | TBD | TBD | TBD | TBD |
 | dev3000 | TBD | TBD | TBD | TBD |
 
 ---
@@ -227,6 +236,9 @@ Debugging assistant for web app development.
 | playwriter | TBD | TBD | TBD | TBD |
 | firecrawl | N/A | N/A | N/A | N/A |
 | browser-use | TBD | TBD | TBD | TBD |
+| browserbase-mcp | TBD | TBD | TBD | TBD |
+| claude-code-chrome | TBD | TBD | TBD | TBD |
+| stagehand | TBD | TBD | TBD | TBD |
 | dev3000 | TBD | TBD | TBD | TBD |
 
 ---
@@ -241,6 +253,9 @@ Debugging assistant for web app development.
 | playwriter | TBD | TBD | TBD | TBD |
 | firecrawl | TBD | TBD | TBD | TBD |
 | browser-use | TBD | TBD | TBD | TBD |
+| browserbase-mcp | TBD | TBD | TBD | TBD |
+| claude-code-chrome | TBD | TBD | TBD | TBD |
+| stagehand | TBD | TBD | TBD | TBD |
 | dev3000 | N/A | N/A | N/A | N/A |
 
 ---
@@ -255,6 +270,9 @@ Debugging assistant for web app development.
 | playwriter | TBD | TBD | TBD | TBD |
 | firecrawl | TBD | TBD | TBD | TBD |
 | browser-use | TBD | TBD | TBD | TBD |
+| browserbase-mcp | TBD | TBD | TBD | TBD |
+| claude-code-chrome | TBD | TBD | TBD | TBD |
+| stagehand | TBD | TBD | TBD | TBD |
 | dev3000 | N/A | N/A | N/A | N/A |
 
 ---
@@ -264,9 +282,9 @@ Debugging assistant for web app development.
 ```mermaid
 xychart-beta
     title "Overall Performance by Tool"
-    x-axis ["playwright-mcp", "playwriter", "firecrawl", "browser-use", "dev3000"]
+    x-axis ["playwright-mcp", "playwriter", "firecrawl", "browser-use", "browserbase", "claude-code", "stagehand", "dev3000"]
     y-axis "Score" 0 --> 100
-    bar [0, 0, 0, 0, 0]
+    bar [0, 0, 0, 0, 0, 0, 0, 0]
 ```
 
 > 📊 _Chart will be populated after benchmark runs_
@@ -302,6 +320,9 @@ xychart-beta
 | playwriter | TBD | TBD | TBD | TBD |
 | firecrawl | N/A | N/A | N/A | N/A |
 | browser-use | TBD | TBD | TBD | TBD |
+| browserbase-mcp | TBD | TBD | TBD | TBD |
+| claude-code-chrome | TBD | TBD | TBD | TBD |
+| stagehand | TBD | TBD | TBD | TBD |
 | dev3000 | TBD | TBD | TBD | TBD |
 
 ---
