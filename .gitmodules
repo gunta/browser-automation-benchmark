@@ -13,3 +13,9 @@
 [submodule "context/playwright-mcp"]
 	path = context/playwright-mcp
 	url = https://github.com/microsoft/playwright-mcp
+[submodule "context/stagehand"]
+	path = context/stagehand
+	url = https://github.com/browserbase/stagehand
+[submodule "context/mcp-server-browserbase"]
+	path = context/mcp-server-browserbase
+	url = https://github.com/browserbase/mcp-server-browserbase
